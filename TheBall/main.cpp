@@ -1,7 +1,6 @@
 // BallDetect.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -12,42 +11,42 @@
 using namespace cv;
 using namespace std;
 
-void getMask(InputArray input, OutputArray output)
-{
-	GaussianBlur(input, output, Size(11, 11), 1.5, 1.5);
-	Mat3b hsv;
-	cvtColor(output, hsv, COLOR_BGR2HSV/*COLOR_BGR2GRAY*/);
-	inRange(hsv, Scalar(10, 10, 10), Scalar(50, 255, 255), output);
-
-	erode(output, output, Mat());
-	dilate(output, output, Mat());
-}
-
-void getBiggestContour(InputOutputArray input, vector<Point>& contour, vector<Vec4i> hierarchy)
-{
-	contour.clear();
-
-	vector<vector<Point> > contours;
-	findContours(input, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-
-	if (contours.size() > 0)
-	{
-		int largestArea = 0;
-		int largestContourIndex = -1;
-		for (int i = 0; i < contours.size(); i++) // iterate through each contour. 
-		{
-			double a = contourArea(contours[i], false);  //  Find the area of contour
-			if (a > largestArea) {
-				largestArea = a;
-				largestContourIndex = i;                //Store the index of largest contour
-			}
-		}
-		if (largestContourIndex >= 0)
-		{
-			contour = vector<Point>(std::move(contours[largestContourIndex]));
-		}
-	}
-}
+//void getMask(InputArray input, OutputArray output)
+//{
+//	GaussianBlur(input, output, Size(11, 11), 1.5, 1.5);
+//	Mat3b hsv;
+//	cvtColor(output, hsv, COLOR_BGR2HSV/*COLOR_BGR2GRAY*/);
+//	inRange(hsv, Scalar(10, 10, 10), Scalar(50, 255, 255), output);
+//
+//	erode(output, output, Mat());
+//	dilate(output, output, Mat());
+//}
+//
+//void getBiggestContour(InputOutputArray input, vector<Point>& contour, vector<Vec4i> hierarchy)
+//{
+//	contour.clear();
+//
+//	vector<vector<Point> > contours;
+//	findContours(input, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+//
+//	if (contours.size() > 0)
+//	{
+//		int largestArea = 0;
+//		int largestContourIndex = -1;
+//		for (int i = 0; i < contours.size(); i++) // iterate through each contour. 
+//		{
+//			double a = contourArea(contours[i], false);  //  Find the area of contour
+//			if (a > largestArea) {
+//				largestArea = a;
+//				largestContourIndex = i;                //Store the index of largest contour
+//			}
+//		}
+//		if (largestContourIndex >= 0)
+//		{
+//			contour = vector<Point>(std::move(contours[largestContourIndex]));
+//		}
+//	}
+//}
 
 //int main(int argc, char** argv)
 //{
@@ -132,7 +131,7 @@ void getBiggestContour(InputOutputArray input, vector<Point>& contour, vector<Ve
 
 int main()
 {
-	Mat image = imread("C:/Users/EFilimonov/Documents/Visual Studio 2015/Projects/BallDetect/x64/Debug/ball_on_table2.jpg");
+	Mat image = imread("../ball_on_table2.jpg");
 	int rows = image.rows;
 	int cols = image.cols;
 
